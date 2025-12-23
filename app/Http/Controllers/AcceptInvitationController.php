@@ -10,11 +10,8 @@ class AcceptInvitationController extends Controller
 
     public function index()
     {
-    $invitations = TeamInvitation::where(
-        'email',
-        auth()->user()->email
-    )->get();
-    
+    $invitations = TeamInvitation::all();
+
 
     return inertia('Dashboard', [
         'invitations' => $invitations,

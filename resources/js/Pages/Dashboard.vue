@@ -33,7 +33,7 @@ const accept = (id) => {
                             class="mt-2"
                         >
                             <span>
-                                {{ invitation.team.email }} —
+                                {{ invitation.email }} —
                                 {{ invitation.role }}
                             </span>
 
