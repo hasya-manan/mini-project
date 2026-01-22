@@ -37,12 +37,14 @@ Route::middleware([
 
     /**
      * ==========================================
-     *     HR ADD MEMBER ROUTE HERE
+     *     HR/ADMIN ADD MEMBER ROUTE HERE
      * ==========================================
      */
     Route::get('/team/add-member', [HRTeamMemberController::class, 'create'])
         ->name('team.add-member');
 
     Route::post('/team/add-member', [HRTeamMemberController::class, 'store']);
+
+    
     
 });
