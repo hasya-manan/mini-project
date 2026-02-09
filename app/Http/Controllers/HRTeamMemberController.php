@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
+
+/**
+ * This is code that handle request about team member so every team
+ */
 class HRTeamMemberController extends Controller
 {
         use AuthorizesRequests;

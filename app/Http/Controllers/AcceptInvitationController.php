@@ -17,20 +17,20 @@ class AcceptInvitationController extends Controller
         'invitations' => $invitations,
     ]);
     }
-    public function accept(TeamInvitation $invitation)
-    {
-        abort_if(
-            $invitation->email !== auth()->user()->email,
-            403
-        );
+    // public function accept(TeamInvitation $invitation)
+    // {
+    //     abort_if(
+    //         $invitation->email !== auth()->user()->email,
+    //         403
+    //     );
 
-        $invitation->team->users()->attach(
-            auth()->id(),
-            ['role' => $invitation->role]
-        );
+    //     $invitation->team->users()->attach(
+    //         auth()->id(),
+    //         ['role' => $invitation->role]
+    //     );
 
-        $invitation->delete();
+    //     $invitation->delete();
 
-        return back();
-    }
+    //     return back();
+    // }
 }

@@ -2,13 +2,15 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 
-defineProps({
-    invitations: Array,
-});
+// Accept a team invitation via router request
 
-const accept = (id) => {
-    router.post(`/invitations/${id}/accept`);
-};
+// defineProps({
+//     invitations: Array,
+// });
+
+// const accept = (id) => {
+//     router.post(`/invitations/${id}/accept`);
+// };
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const accept = (id) => {
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <Welcome />
 
-                    <div v-if="invitations && invitations.length">
+                    <!-- <div v-if="invitations && invitations.length">
                         <h3 class="font-semibold mt-4">Pending Invitations</h3>
 
                         <div
@@ -44,7 +46,7 @@ const accept = (id) => {
                                 Accept
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

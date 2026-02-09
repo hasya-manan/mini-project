@@ -30,10 +30,10 @@ Route::middleware([
         ->name('dashboard');
 
      // Accept invitation
-    Route::post(
-        '/invitations/{invitation}/accept',
-        [AcceptInvitationController::class, 'accept']
-    )->name('invitations.accept');
+    // Route::post(
+    //     '/invitations/{invitation}/accept',
+    //     [AcceptInvitationController::class, 'accept']
+    // )->name('invitations.accept');
 
     /**
      * ==========================================
