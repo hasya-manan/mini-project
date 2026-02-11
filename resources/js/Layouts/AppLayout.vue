@@ -74,20 +74,22 @@ const logout = () => {
                                         <div class="w-60">
                                             <!-- Team Management -->
                                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                                Manage Team
+                                                Manage Company
                                             </div>
 
                                             <!-- Team Settings -->
-                                            <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
-                                                Team Settings
+                                           <DropdownLink v-if="$page.props.auth.user.user_level >= 1" :href="route('teams.show', $page.props.auth.user.current_team)">
+                                            Company Settings
+                                           </DropdownLink>
+                                            <!--  TODO: Come back and change for 1 just in case the owner have more than 1 company-->
+                                           <DropdownLink v-if="$page.props.auth.user.user_level >= 2 && $page.props.jetstream.canCreateTeams" :href="route('teams.create')">
+                                            Create New Company
                                             </DropdownLink>
 
-                                            <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
-                                                Create New Team
-                                            </DropdownLink>
-
+                                            <!--  TODO: for now switch team is 2 and up meaning only super admin can switch-->
                                             <!-- Team Switcher -->
-                                            <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                            <!-- <template v-if="$page.props.auth.user.all_teams.length > 1"> -->
+                                                <template v-if="$page.props.auth.user.user_level >= 2 && $page.props.auth.user.all_teams.length > 1">
                                                 <div class="border-t border-gray-200" />
 
                                                 <div class="block px-4 py-2 text-xs text-gray-400">

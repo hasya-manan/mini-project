@@ -17,6 +17,17 @@ Route::get('/', function () {
     ]);
 });
 
+// This group is ONLY accessible if:
+// 1. User is logged in (auth)
+// 2. User has user_level 2 (sysadmin)
+Route::middleware(['auth', 'sysadmin'])->group(function () {
+    
+    Route::get('/super-admin/dashboard', function () {
+        return "Welcome, Boss. You can see all companies here.";
+    })->name('superadmin.dashboard');
+
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
