@@ -163,7 +163,7 @@ const logout = () => {
 
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
-                            <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-slate-50 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
+                            <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-slate-50 focus:outline-none focus:bg-slate-50 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg
                                     class="size-6"
                                     stroke="currentColor"

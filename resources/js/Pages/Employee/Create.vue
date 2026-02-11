@@ -27,55 +27,53 @@ const submit = () => {
 
 <template>
     <AppLayout title="Add Employee">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Company Employees
-            </h2>
-        </template>
+        <div class="bg-gray-50 min-h-screen py-12">
+            <div class="max-w-2xl mx-auto">
+                <div class="mb-6 text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Onboard New Employee</h2>
+                    <p class="text-gray-600 mt-2">Set up their profile and send an invitation link.</p>
+                </div>
 
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <FormSection @submitted="submit">
-                <template #title>Employee Information</template>
-                <template #description>
-                    Enter the details for the new hire. They will receive an email to activate their account and set a password.
-                </template>
+                <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+                    <form @submit.prevent="submit" class="p-8 space-y-6">
+                        
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <InputLabel for="name" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Full Name" />
+                                <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="John Doe" required />
+                            </div>
 
-                <template #form>
-                    <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="name" value="Full Name" />
-                        <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required />
-                        <InputError :message="form.errors.name" class="mt-2" />
-                    </div>
+                            <div>
+                                <InputLabel for="email" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Work Email" />
+                                <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="john@company.com" required />
+                            </div>
+                        </div>
 
-                    <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="Official Email" />
-                        <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required />
-                        <InputError :message="form.errors.email" class="mt-2" />
-                    </div>
+                        <hr class="border-gray-100">
 
-                    <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="department" value="Department" />
-                        <select id="department" v-model="form.department_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
-                            <option value="">Select Department</option>
-                            <option v-for="dept in departments" :key="dept.id" :value="dept.id">
-                                {{ dept.name }}
-                            </option>
-                        </select>
-                        <InputError :message="form.errors.department_id" class="mt-2" />
-                    </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <InputLabel for="department" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Department" />
+                                <select id="department" v-model="form.department_id" class="mt-1 block w-full border-gray-200 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                    <option value="">Select Dept</option>
+                                    <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ dept.name }}</option>
+                                </select>
+                            </div>
 
-                    <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="designation" value="Job Title (Designation)" />
-                        <TextInput id="designation" v-model="form.designation" type="text" class="mt-1 block w-full" />
-                    </div>
-                </template>
+                            <div>
+                                <InputLabel for="designation" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Position" />
+                                <TextInput id="designation" v-model="form.designation" type="text" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="Senior Developer" />
+                            </div>
+                        </div>
 
-                <template #actions>
-                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Send Invitation
-                    </PrimaryButton>
-                </template>
-            </FormSection>
+                        <div class="pt-4">
+                            <PrimaryButton class="w-full justify-center py-3 text-lg rounded-xl shadow-lg shadow-indigo-200 hover:scale-[1.02] active:scale-[0.98] transition-all" :disabled="form.processing">
+                                Create Employee Record
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </AppLayout>
 </template>

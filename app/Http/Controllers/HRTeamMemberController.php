@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Models\Department;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 
 /**
@@ -16,39 +18,55 @@ class HRTeamMemberController extends Controller
 {
         use AuthorizesRequests;
 
+    // TODO: added the Global Scope to Department model , so can actually make it even cleaner. can find it inside 
+    // model department
     public function create()
-{
-    // Fetch departments linked to the HR Admin's current team
-    $departments = \App\Models\Department::where('team_id', auth()->user()->current_team_id)->get();
 
-    return Inertia::render('Employee/Create', [
-        'departments' => $departments
+    {
+        // The Global Scope handles the "where team_id" (model department) part automatically so no need to fetch team_id
+        return Inertia::render('Employee/Create', [
+            'departments' => Department::all(), 
+            'supervisors' => User::where('current_team_id', auth()->user()->current_team_id)->get(),
     ]);
-}
+    }
   
     public function store(Request $request)
     {
-        // 1. Grab the current company (The HR Admin's team)
-    $team = auth()->user()->currentTeam;
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'department_id' => 'required|exists:departments,id',
+            'designation' => 'nullable|string|max:255',
+        ]);
 
-    // 2. Create the User (Password is a random string for now)
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make(Str::random(32)), 
-        'user_level' => 0, 
-        'current_team_id' => $team->id, // Lock them to this company
-    ]);
+        DB::transaction(function () use ($request) {
+            $currentTeam = auth()->user()->currentTeam;
 
-    // 3. Attach them to the Jetstream team table so they show up in 'Team Settings'
-    $team->users()->attach($user, ['role' => 'employee']);
+            // 1. Create the User (Account)
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make(Str::random(32)), // Random password until they set it
+                'user_level' => 0, // Employee level
+                'current_team_id' => $currentTeam->id,
+            ]);
 
-    // 4. Send the Invitation Email
-    // (We will generate the 'Set Password' link here)
+            // 2. Attach to Jetstream Team (Crucial for Jetstream permissions)
+            $currentTeam->users()->attach($user, ['role' => 'employee']);
 
-        // send welcome email
-       // \Mail::to($user->email)->send(new \App\Mail\WelcomeUser($user, $temporaryPassword));
+            // 3. Create the Employee Profile (Work Data)
+            EmployeeDetail::create([
+                'user_id' => $user->id,
+                'department_id' => $request->department_id,
+                // supervisor_id can be added here or updated later
+                'joined_date' => now(), // Default to today
+            ]);
+            
+            // TODO: Send the "Set Your Password" email here
+        });
 
-        return back()->with('success', 'Team member added successfully.');
+        return redirect()->route('dashboard')->with('flash', [
+            'banner' => 'Employee invited successfully!'
+        ]);
     }
 }

@@ -4,7 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\HRTeamMemberController;
-use App\Http\Controllers\AcceptInvitationController;
+
 
 
 
@@ -33,29 +33,23 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return Inertia::render('Dashboard');
-    // })->name('dashboard');
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-    Route::get('/dashboard', [AcceptInvitationController::class, 'index'])
-        ->name('dashboard');
-
-     // Accept invitation
-    // Route::post(
-    //     '/invitations/{invitation}/accept',
-    //     [AcceptInvitationController::class, 'accept']
-    // )->name('invitations.accept');
-
+   
+     
     /**
      * ==========================================
      *     HR/ADMIN ADD MEMBER ROUTE HERE
      * ==========================================
      */
-    Route::get('/team/add-member', [HRTeamMemberController::class, 'create'])
-        ->name('team.add-member');
-
-    Route::post('/team/add-member', [HRTeamMemberController::class, 'store']);
-
+   
+     // Page to show the form
+    Route::get('/employees/create', [HRTeamMemberController::class, 'create'])->name('team.add-member.create');
+    
+    // Action to save the data
+    Route::post('/employees', [HRTeamMemberController::class, 'store'])->name('team.add-member.store');
     
     
 });
