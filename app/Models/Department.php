@@ -53,12 +53,13 @@ class Department extends Model
         return $this->belongsTo(User::class, 'manager_id');
     }
 
-    /**
-     * Get the Employees (Users) assigned to this department.
-     * (Note: Ensure you have 'department_id' in your users table)
-     */
+  /**
+ * Get all employees in this department.
+ */
     public function employees(): HasMany
     {
-        return $this->hasMany(User::class, 'department_id');
+        // This looks for users who have a record in employee_details 
+        // where the department_id matches this department.
+        return $this->hasMany(EmployeeDetail::class, 'department_id');
     }
 }
