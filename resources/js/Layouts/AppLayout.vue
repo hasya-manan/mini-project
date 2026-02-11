@@ -78,7 +78,7 @@ const logout = () => {
                                             </div>
 
                                             <!-- Team Settings -->
-                                           <DropdownLink v-if="$page.props.auth.user.user_level >= 1" :href="route('teams.show', $page.props.auth.user.current_team)">
+                                           <DropdownLink v-if="$page.props.auth.user.user_level >= 0" :href="route('teams.show', $page.props.auth.user.current_team)">
                                             Company Settings
                                            </DropdownLink>
                                             <!--  TODO: Come back and change for 1 just in case the owner have more than 1 company-->

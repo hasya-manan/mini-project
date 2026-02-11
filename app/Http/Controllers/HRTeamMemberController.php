@@ -17,38 +17,34 @@ class HRTeamMemberController extends Controller
         use AuthorizesRequests;
 
     public function create()
-    {
-         $team = auth()->user()->currentTeam;
+{
+    // Fetch departments linked to the HR Admin's current team
+    $departments = \App\Models\Department::where('team_id', auth()->user()->current_team_id)->get();
 
-        $this->authorize('addTeamMember', $team);
-        return Inertia::render('Teams/RegisterTeam');
-    }
+    return Inertia::render('Employee/Create', [
+        'departments' => $departments
+    ]);
+}
   
     public function store(Request $request)
     {
-        $team = auth()->user()->currentTeam;
-        $this->authorize('addTeamMember', $team);
+        // 1. Grab the current company (The HR Admin's team)
+    $team = auth()->user()->currentTeam;
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:manager,employee',
-        ]);
+    // 2. Create the User (Password is a random string for now)
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make(Str::random(32)), 
+        'user_level' => 0, 
+        'current_team_id' => $team->id, // Lock them to this company
+    ]);
 
-        // create user with temporary password
-        $temporaryPassword = 'user1234';
+    // 3. Attach them to the Jetstream team table so they show up in 'Team Settings'
+    $team->users()->attach($user, ['role' => 'employee']);
 
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($temporaryPassword),
-        ]);
-
-        // attach to HR's team
-        auth()->user()->currentTeam->users()->attach($user->id, [
-            'role' => $request->role,
-        ]);
+    // 4. Send the Invitation Email
+    // (We will generate the 'Set Password' link here)
 
         // send welcome email
        // \Mail::to($user->email)->send(new \App\Mail\WelcomeUser($user, $temporaryPassword));
