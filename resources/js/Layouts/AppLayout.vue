@@ -5,7 +5,7 @@ import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
-
+import { LayoutDashboard, UserPlus, LogOut  } from 'lucide-vue-next';
 defineProps({
     title: String,
 });
@@ -73,11 +73,16 @@ const switchToTeam = (team) => {
                         </Dropdown>
 
                         <div class="space-y-1">
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="flex items-center">
-                                <span class="shrink-0 text-lg">🏠</span> <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap">Dashboard</span>
+                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')"
+                                class="flex items-center">
+                                <LayoutDashboard :size="20" class="shrink-0" />
+                                <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Dashboard</span>
                             </NavLink>
-                            <NavLink :href="route('team.add-member.create')" :active="route().current('team.add-member.create')" class="flex items-center">
-                                <span class="shrink-0 text-lg">👤</span> <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap">Add Employee</span>
+
+                            <NavLink :href="route('team.add-member.create')"
+                                :active="route().current('team.add-member.create')" class="flex items-center">
+                                <UserPlus :size="20" class="shrink-0" />
+                                <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Add Employee</span>
                             </NavLink>
                         </div>
                     </div>
@@ -97,13 +102,15 @@ const switchToTeam = (team) => {
                         </Link>
 
                         <form @submit.prevent="logout" class="mt-2">
-                            <button type="submit" class="flex items-center gap-3 w-full p-2 text-xs font-medium text-primary-600 hover:bg-primary-50 rounded-lg transition group">
-                                <svg class="size-4 shrink-0 text-primary-400 group-hover:text-secondary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
+                            <button type="submit"
+                                class="flex items-center gap-3 w-full p-2 text-xs font-medium text-primary-600 hover:bg-primary-50 rounded-lg transition group">
+
+                                <LogOut :size="16" class="shrink-0 text-primary-400 group-hover:text-secondary-600" />
+
                                 <span v-show="isSidebarOpen" class="whitespace-nowrap">Log Out</span>
                             </button>
                         </form>
+                        
                     </div>
                 </div>
             </aside>
