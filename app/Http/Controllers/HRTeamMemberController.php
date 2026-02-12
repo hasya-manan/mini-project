@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Department;
-use Illuminate\Support\Str;
+use App\Models\EmployeeDetail;
+use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 
 /**
