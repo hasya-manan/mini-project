@@ -75,13 +75,13 @@ const switchToTeam = (team) => {
                         <div class="space-y-1">
                             <NavLink :href="route('dashboard')" :active="route().current('dashboard')"
                                 class="flex items-center">
-                                <LayoutDashboard :size="20" class="shrink-0" />
+                                <LayoutDashboard :size="18" class="shrink-0" />
                                 <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Dashboard</span>
                             </NavLink>
 
                             <NavLink :href="route('team.add-member.create')"
                                 :active="route().current('team.add-member.create')" class="flex items-center">
-                                <UserPlus :size="20" class="shrink-0" />
+                                <UserPlus :size="18" class="shrink-0" />
                                 <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Add Employee</span>
                             </NavLink>
                         </div>
