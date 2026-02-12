@@ -45,18 +45,28 @@ class JetstreamServiceProvider extends ServiceProvider
     {
         Jetstream::defaultApiTokenPermissions(['read']);
 
-        Jetstream::role('admin', 'Administrator', [
+       // The "Company Owner" / HR Head
+        Jetstream::role('hr-admin', 'HR Administrator', [
+            'user:create',     // Added: Permission to add employees
+            'user:manage',     // Added: Permission to edit/delete
             'leave:approve',
             'claim:approve',
             'leave:manage',
             'report:view',
-        ])->description('HR administrators can manage leave, approve claims, and view reports.');
-        
+        ])->description('Full access to company HR tools and employee management.');
+
+    
          Jetstream::role('manager', 'Manager', [
             'leave:approve',
             'claim:approve',
             'leave:manage',
         ])->description('Managers can approve leave and claims for their team members.');
+
+         Jetstream::role('team-lead', 'Team Lead', [
+            'leave:approve',
+            'claim:approve',
+            'leave:manage',
+        ])->description('Team leads can approve leave and claims for their team members.');
 
         Jetstream::role('employee', 'Employee', [
             'leave:apply',

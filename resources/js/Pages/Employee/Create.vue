@@ -29,6 +29,7 @@ const submit = () => {
 
 <template>
     <AppLayout title="Add Employee">
+       
         <div class="bg-gray-50 min-h-screen py-12">
             <div class="max-w-2xl mx-auto">
                 <div class="mb-6 text-center">
