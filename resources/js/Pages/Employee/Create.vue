@@ -9,13 +9,15 @@ import FormSection from '@/Components/FormSection.vue';
 
 const props = defineProps({
     departments: Array, // Passed from the Controller
+    supervisors: Array,
 });
 
 const form = useForm({
     name: '',
     email: '',
     department_id: '',
-    designation: '', // Job Title
+    position: '', // Job Title
+    joined_date: new Date().toISOString().split('T')[0],
 });
 
 const submit = () => {
@@ -36,15 +38,15 @@ const submit = () => {
 
                 <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
                     <form @submit.prevent="submit" class="p-8 space-y-6">
-                        
+                        <!--users-->
                         <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <InputLabel for="name" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Full Name" />
+                                <InputLabel for="name"  value="Full Name" />
                                 <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="John Doe" required />
                             </div>
 
                             <div>
-                                <InputLabel for="email" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Work Email" />
+                                <InputLabel for="email"  value="Work Email" />
                                 <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="john@company.com" required />
                             </div>
                         </div>
@@ -52,18 +54,33 @@ const submit = () => {
                         <hr class="border-gray-100">
 
                         <div class="grid grid-cols-2 gap-6">
+                            <!--employee details -->
                             <div>
-                                <InputLabel for="department" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Department" />
-                                <select id="department" v-model="form.department_id" class="mt-1 block w-full border-gray-200 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                <InputLabel for="department"  value="Department" />
+                                <select id="department" v-model="form.department_id" class="mt-1 block w-full border-gray-200 rounded-lg bg-gray-50 focus:border-primary-300 focus:ring-primary-300 shadow-sm"">
                                     <option value="">Select Dept</option>
                                     <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ dept.name }}</option>
                                 </select>
                             </div>
+                            <div>
+                                <InputLabel for="supervisor"  value="Supervisor" />
+                                <select id="supervisor" v-model="form.supervisor_id" class="mt-1 block w-full border-gray-200 rounded-lg bg-gray-50 focus:border-primary-300 focus:ring-primary-300 shadow-sm"">
+                                    <option value="">Select Supervisor/Team Lead</option>
+                                    <option v-for="supers in supervisors" :key="supers.id" :value="supers.id">{{ supers.name }}</option>
+                                </select>
+                            </div>
 
                             <div>
-                                <InputLabel for="designation" class="text-xs font-bold uppercase tracking-wider text-gray-500" value="Position" />
-                                <TextInput id="designation" v-model="form.designation" type="text" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="Senior Developer" />
+                                <InputLabel for="position"  value="Position" />
+                                <TextInput id="position" v-model="form.position" type="text" class="mt-1 block w-full border-gray-200 bg-gray-50 focus:bg-white transition" placeholder="Senior Developer" />
                             </div>
+                            <div>
+                                <InputLabel for="joined_date" value="Joining Date" />
+                                <TextInput id="joined_date" v-model="form.joined_date" type="date"
+                                    class="mt-1 block w-full" required />
+                                <InputError :message="form.errors.joined_date" class="mt-2" />
+                            </div>
+                            
                         </div>
 
                         <div class="pt-4">

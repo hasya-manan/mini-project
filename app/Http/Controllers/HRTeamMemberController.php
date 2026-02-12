@@ -38,7 +38,8 @@ class HRTeamMemberController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'department_id' => 'required|exists:departments,id',
-            'designation' => 'nullable|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'joined_date' => 'required|date',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -60,8 +61,9 @@ class HRTeamMemberController extends Controller
             EmployeeDetail::create([
                 'user_id' => $user->id,
                 'department_id' => $request->department_id,
-                // supervisor_id can be added here or updated later
-                'joined_date' => now(), // Default to today
+                'supervisor_id' => $request->supervisor_id,
+                'position' => $request->position,
+                'joined_date' => $request['joined_date']
             ]);
             
             // TODO: Send the "Set Your Password" email here
