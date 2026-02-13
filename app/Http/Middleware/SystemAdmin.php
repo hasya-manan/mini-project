@@ -15,17 +15,17 @@ class SystemAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-       // Check if user is logged in AND is a System Admin (Level 2)
-        if (auth()->check() && auth()->user()->user_level === 2) {
+        // Allows HR Admin (1) and Super Admin (2)
+        if (auth()->check() && auth()->user()->user_level >= 1) {
             return $next($request);
         }
 
-        // If not, kick them back to the dashboard with an error
-        return redirect('/dashboard')->with('error', 'You do not have this access.');
-        }
-        // In SystemAdmin.php
-//if (auth()->check() && auth()->user()->user_level >= 1) { 
-    // This allows both Company Admins (1) and Super Admins (2) 
-    // to access certain admin areas.
-//}
+        // Redirect Level 0 users back with a flash message
+        return redirect('/dashboard')->with('flash', [
+            'bannerStyle' => 'danger',
+            'banner' => 'You do not have permission to access that area.',
+        ]);
+    }
+
+
 }

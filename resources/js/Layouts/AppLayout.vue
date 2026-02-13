@@ -79,7 +79,7 @@ const switchToTeam = (team) => {
                                 <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Dashboard</span>
                             </NavLink>
 
-                            <NavLink :href="route('team.add-member.create')"
+                            <NavLink :href="route('team.add-member.create')" v-if="$page.props.auth.user.user_level >= 1"
                                 :active="route().current('team.add-member.create')" class="flex items-center">
                                 <UserPlus :size="18" class="shrink-0" />
                                 <span v-show="isSidebarOpen" class="ml-3 whitespace-nowrap text-sm">Add Employee</span>

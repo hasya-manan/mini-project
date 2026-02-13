@@ -67,9 +67,14 @@ class JetstreamServiceProvider extends ServiceProvider
             'leave:manage',
         ])->description('Team leads can approve leave and claims for their team members.');
 
-        Jetstream::role('employee', 'Employee', [
+        Jetstream::role('executive', 'Executive', [
             'leave:apply',
             'claim:submit',
         ])->description('Employees can apply for leave and submit claims.');
+
+        // Below Executive
+        Jetstream::role('associate', 'Associate / Part time', [
+            'leave:apply',
+        ])->description('Junior staff or part-time. Can apply for leave but cannot submit claims.');
     }
 }
