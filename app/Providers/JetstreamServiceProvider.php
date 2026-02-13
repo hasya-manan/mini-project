@@ -54,7 +54,6 @@ class JetstreamServiceProvider extends ServiceProvider
             'leave:manage',
             'report:view',
         ])->description('Full access to company HR tools and employee management.');
-
     
          Jetstream::role('manager', 'Manager', [
             'leave:approve',
