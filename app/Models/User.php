@@ -31,6 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_level',       
+        'current_team_id',  
     ];
 
     /**

@@ -44,7 +44,14 @@ class JetstreamServiceProvider extends ServiceProvider
     protected function configurePermissions(): void
     {
         Jetstream::defaultApiTokenPermissions(['read']);
+        // TODO: admin can stay but employee will delete later on after we clean up the database 
+        Jetstream::role('superadmin', 'System Owner', [
+            'all-access'
+        ])->description('Can manage all companies.');
 
+        Jetstream::role('employee', 'Employee', [
+            'read',
+        ])->description('Regular employees can only read data.');
        // The "Company Owner" / HR Head
         Jetstream::role('hr-admin', 'HR Administrator', [
             'user:create',     // Added: Permission to add employees

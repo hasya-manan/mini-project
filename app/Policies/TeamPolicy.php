@@ -34,7 +34,7 @@ class TeamPolicy
         //return true;
         // Only Company Admins (1) and Super Admins (2) can create teams.
         // Regular employees (0) are blocked.
-        return $user->user_level >= 2;
+      return $user->user_level === 2;
     }
 
     /**

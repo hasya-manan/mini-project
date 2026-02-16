@@ -20,6 +20,7 @@ class EmployeeDetail extends Model
         'user_id',
         'department_id',
         'supervisor_id',
+        'position',
         'address',
         'nok_name',
         'nok_phone',

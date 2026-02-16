@@ -25,20 +25,31 @@ class HRTeamMemberController extends Controller
 {
     use AuthorizesRequests;
     public function create()
-    {
+    {      
+        $user = auth()->user();
         
         // The Global Scope handles the "where team_id" (model department) part automatically so no need to fetch team_id
         return Inertia::render('Employee/Create', [
             'departments' => Department::all(), 
             'supervisors' => User::where('current_team_id', auth()->user()->current_team_id)->get(),
-            'roles' => collect(Jetstream::$roles)->transform(function ($role) {
-            return [
-                'key' => $role->key,
-                'name' => $role->name,
-                'description' => $role->description,
-            ];
-        })->values(),
-    
+            'roles' => collect(Jetstream::$roles)
+            ->filter(function ($role) use ($user) {
+                // If I am NOT a Super Admin (Level 2), hide the 'superadmin' role
+                if ($user->user_level < 2) {
+                    return $role->key !== 'superadmin';
+                }
+                
+                // If I AM a Super Admin, let me see everything
+                return true; 
+            })
+            ->transform(function ($role) {
+                return [
+                    'key' => $role->key,
+                    'name' => $role->name,
+                    'description' => $role->description,
+                ];
+            })
+            ->values(),
     ]);
     }
   

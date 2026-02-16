@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Add your alias here!
         $middleware->alias([
             'sysadmin' => \App\Http\Middleware\SystemAdmin::class,
+            'superadmin' => \App\Http\Middleware\SuperAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

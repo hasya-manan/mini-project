@@ -82,7 +82,7 @@ const submit = () => {
                                 </select>
                             </div>
                             <div>
-                                <InputLabel for="supervisor"  value="Supervisor" />
+                                <InputLabel for="supervisor"  value="Reporting To." />
                                 <select id="supervisor" v-model="form.supervisor_id"
                                     class="mt-1 block w-full border-gray-200 rounded-lg bg-gray-50 focus:border-primary-300 focus:ring-primary-300 shadow-sm">
                                     <option value="">Select Supervisor/Team Lead</option>
